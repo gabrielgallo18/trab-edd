@@ -1,0 +1,43 @@
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+public class Main {
+    public int rangeSum(TreeNode root, int inicial, int finalValue) {
+        if (root == null) {
+            return 0;
+        }
+
+        if (root.val < inicial) {
+            return rangeSum(root.right, inicial, finalValue);
+        } else if (root.val > finalValue) {
+            return rangeSum(root.left, inicial, finalValue);
+        } else {
+            return root.val + rangeSum(root.left, inicial, finalValue) + rangeSum(root.right, inicial, finalValue);
+        }
+    }
+
+    public static void main(String[] args) {
+        Main solution = new Main();
+
+        // Construindo a árvore
+        TreeNode root = new TreeNode(10);
+        root.left = new TreeNode(5);
+        root.right = new TreeNode(15);
+        root.left.left = new TreeNode(3);
+        root.left.right = new TreeNode(7);
+        root.left.left.left = new TreeNode(1);
+        root.left.right.left = new TreeNode(6);
+        root.right.left = new TreeNode(13);
+        root.right.right = new TreeNode(18);
+
+        int inicial = 6;
+        int finalValue = 10;
+
+        int resultado = solution.rangeSum(root, inicial, finalValue);
+        System.out.println(resultado); // Isso imprimirá 23
+    }
+}
